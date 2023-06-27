@@ -46,11 +46,12 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") User user,
+                         @ModelAttribute("nameRole") String name) {
 
         Set<Role> roleSet = new HashSet<>();
 
-        roleSet.add((Role) roleService.getRoles());
+        roleSet.add(roleService.getRoleByName(name));
         user.setRoles(roleSet);
 
         usersService.save(user);
@@ -65,11 +66,13 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+    public String update(@ModelAttribute("user") User user,
+                         @ModelAttribute("nameRole") String name,
+                         @PathVariable("id") long id) {
 
         Set<Role> roleSet = new HashSet<>();
 
-        roleSet.add((Role) roleService.getRoles());
+        roleSet.add(roleService.getRoleByName(name));
         user.setRoles(roleSet);
 
         usersService.update(id, user);

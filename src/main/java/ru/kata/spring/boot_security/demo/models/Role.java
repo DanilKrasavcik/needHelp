@@ -3,8 +3,9 @@ package ru.kata.spring.boot_security.demo.models;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -18,8 +19,9 @@ public class Role implements GrantedAuthority {
     @Column(unique = true)
     private String name;
 
+    @Transient
     @ManyToMany(mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
     public Role(String name) {
         this.name = name;
