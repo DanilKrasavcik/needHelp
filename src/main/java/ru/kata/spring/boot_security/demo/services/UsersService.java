@@ -13,6 +13,8 @@ public interface UsersService {
 
     User findOne(long id);
 
+    User getUserByUsername(String username);
+
     void save(User user);
 
     void update(long id, User updatedUser);

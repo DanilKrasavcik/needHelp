@@ -22,10 +22,17 @@
   <label for="username">Enter username: </label>
   <input type="text" th:field="*{username}" id="username"/>
   <br/>
-  <label for="nameRole">Roles</label>
+  <!--<label for="nameRole">Roles</label>
   <select multiple name="nameRole" id="nameRole">
-    <option>ROLE_USER</option>
-    <option>ROLE_ADMIN</option>
+    <option th:each="role : ${roles}"
+            th:value="${role.getName()}"
+            th:text="${role.getName()}"></option>
+  </select>-->
+  <label>Roles</label>
+  <select multiple ="multiple" th:field="*{roles}">
+    <option th:each="role : ${allRoles}"
+            th:value="${role.getId()}"
+            th:text="${role.getName()}"></option>
   </select>
   <br/>
   <input type="submit" value="Create!"/>
