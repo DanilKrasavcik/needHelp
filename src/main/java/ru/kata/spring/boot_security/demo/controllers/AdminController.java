@@ -14,7 +14,7 @@ import java.util.Set;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdminController {
 
     private UsersService usersService;
@@ -25,12 +25,12 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping()
     public String getUsers(@ModelAttribute("user") User user, Model model,
                            Principal principal) {
 
         model.addAttribute("users", usersService.findAll());
-        model.addAttribute("admin", usersService.getUserByUsername(principal.getName()));
+        model.addAttribute("usingUser", usersService.getUserByUsername(principal.getName()));
         return "admin";
     }
 
@@ -77,7 +77,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public String update(@ModelAttribute("user") User user,
                          @ModelAttribute("nameRole") String name,
                          @PathVariable("id") long id) {
