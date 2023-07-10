@@ -43,9 +43,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <!--<p th:text="${user.getName() + ', ' + user.getAge()}">VALUE</p>-->
-            <strong>
-                <p th:text="${usingUser.email + ' with roles: ' + usingUser.roles}">VALUE</p>
-            </strong>
+
+            <form class="form-horizontal">
+                <strong><span th:text="${usingUser.email}">VALUE</span></strong>
+
+                <span th:text="${' with roles: ' + usingUser.roles}">VALUE</span>
+
+            </form>
 
         </div>
 
@@ -135,8 +139,12 @@
                                         <td th:text="${user.getName()}"></td>
                                         <td th:text="${user.getAge()}"></td>
                                         <td th:text="${user.getEmail()}"></td>
-                                        <td th:text="${user.getRoles()}"></td>
-                                        <td> <!--<a th:text="Edit" class="btn btn-info" th:href="@{/admin/{id}/edit(id=${user.getId()})}"></a>-->
+                                        <td>
+                                            <th:block th:each="userRole : ${user.getRoles()}">
+                                                <span th:text="${userRole.toString()}"></span>
+                                            </th:block>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-info" data-toggle="modal" th:data-target="${'#myEdit'+ user.id}">Edit</button>
                                             <div th:id="${'myEdit' + user.id}" class="modal">
                                                 <form role="form" class="form-horizontal "
@@ -157,30 +165,32 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="email" class="control-label">Email</label>
-                                                                                <input type="text" class="form-control" th:value="${user.email}"  id="email"/>
-                                                                                <!--<label for="email" class="control-label">Email</label>
-                                                                                <input type="email" class="form-control"                     id="email" placeholder="Email">-->
+                                                                                <input type="text" class="form-control" th:value="${user.email}" th:name="email"  id="email"/>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="email" class="control-label">Username</label>
+                                                                                <input type="text" class="form-control" th:value="${user.username}" th:name="username"  id="username"/>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="name" class="control-label">Name</label>
-                                                                                <input type="text" class="form-control" th:value="${user.name}"  id="name"/>
+                                                                                <input type="text" class="form-control" th:value="${user.name}" th:name="name"  id="name"/>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="name" class="control-label">Age</label>
-                                                                                <input type="number" class="form-control" th:value="${user.age}"  id="age"/>
+                                                                                <input type="number" class="form-control" th:value="${user.age}" th:name="age"  id="age"/>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="password" class="control-label">Password</label>
-                                                                                <input type="password" class="form-control" th:value="${user.password}" id="password" readonly>
+                                                                                <input type="password" class="form-control" th:value="${user.password}" th:name="password" id="password">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="nameRole">Role</label>
-                                                                                <select multiple name="nameRole" id="nameRole">
-                                                                                    <option>USER</option>
-                                                                                    <option>ADMIN</option>
+                                                                                <select multiple name="nameRole" th:name="nameRole" id="nameRole">
+                                                                                    <option th:value="ROLE_USER" th:text="USER" option>
+                                                                                    <option th:value="ROLE_ADMIN" th:text="ADMIN" option>
                                                                                 </select>
                                                                             </div>
-
+-->
                                                                     </div>
                                                                 </div>
                                                             </div>

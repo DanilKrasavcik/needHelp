@@ -29,6 +29,7 @@ public class AdminController {
     public String getUsers(@ModelAttribute("user") User user, Model model,
                            Principal principal) {
 
+        model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("users", usersService.findAll());
         model.addAttribute("usingUser", usersService.getUserByUsername(principal.getName()));
         return "admin";
@@ -80,7 +81,8 @@ public class AdminController {
     @PatchMapping("/update/{id}")
     public String update(@ModelAttribute("user") User user,
                          @ModelAttribute("nameRole") String name,
-                         @PathVariable("id") long id) {
+                         @PathVariable("id") long id, Model model) {
+
 
         Set<Role> roleSet = new HashSet<>();
 
