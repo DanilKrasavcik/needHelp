@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.services.UsersService;
 
 import java.security.Principal;
 import java.util.HashSet;
+
 import java.util.Set;
 
 
@@ -32,14 +33,11 @@ public class AdminController {
         model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("users", usersService.findAll());
         model.addAttribute("usingUser", usersService.getUserByUsername(principal.getName()));
+        model.addAttribute("allRoles", roleService.getRoles());
         return "admin";
     }
 
-    /*@GetMapping("/admin/{id}")
-    public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", usersService.findOne(id));
-        return "/admin";
-    }*/
+
 
     @GetMapping("/new")
     public String newUser(Model model) {
@@ -51,22 +49,6 @@ public class AdminController {
     @PostMapping("/new")
     public String create(@ModelAttribute("user") User user) {
 
-
-        //Set<Role> roleSet = new HashSet<>();
-        //List<Role> listRoles = new ArrayList<>();
-        /*for (Role role : roleService.getRoles()) {
-            roleSet.add(roleService.getRoleByName(name));
-        }*/
-        //user.setRoles(listRoles);
-        //user.setRoles(listRoles);
-
-
-
-//        Set<Role> roleSet = new HashSet<>();
-
-//        roleSet.add(roleService.getRoleByName(name));
-       // user.setRoles(roleSet);
-
         usersService.save(user);
         return "redirect:/admin";
     }
@@ -75,6 +57,7 @@ public class AdminController {
     public String edit(Model model, @PathVariable("id") long id) {
         model.addAttribute("user", usersService.findOne(id));
         model.addAttribute("roles", roleService.getRoles());
+        model.addAttribute("allRoles", roleService.getRoles());
         return "redirect:/admin";
     }
 
@@ -84,6 +67,7 @@ public class AdminController {
                          @PathVariable("id") long id, Model model) {
 
 
+        model.addAttribute("allRoles", roleService.getRoles());
         Set<Role> roleSet = new HashSet<>();
 
         roleSet.add(roleService.getRoleByName(name));
